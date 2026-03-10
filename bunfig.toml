@@ -1,0 +1,18 @@
+# Bun configuration for MCP RLM Mem0
+
+[test]
+# Test configuration
+# preload = []
+coverage = true
+coverageDir = "./coverage"
+
+# Test pattern matching
+testMatch = ["**/*.test.ts", "**/*.spec.ts"]
+testIgnore = ["**/node_modules/**", "**/dist/**"]
+
+# Timeout
+timeout = 5000
+
+[install]
+# Package installation config
+registry = "https://registry.npmjs.org"

@@ -1,0 +1,37 @@
+{
+  "name": "@seshat/tools-api",
+  "version": "1.0.2",
+  "description": "seshat REST API server - Semantic code search, memory, and context compression",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "seshat-api": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "start": "bun src/index.ts",
+    "build": "bun build src/index.ts --outdir=dist --target=bun",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.2.0",
+    "@elysiajs/node": "^1.2.0",
+    "@elysiajs/stream": "^1.1.0",
+    "@elysiajs/swagger": "^1.2.0",
+    "@seshat/core": "workspace:*",
+    "@seshat/shared": "workspace:*",
+    "elysia": "^1.2.25"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.2",
+    "dotenv": "^17.2.4"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/S1LV4/seshat"
+  }
+}

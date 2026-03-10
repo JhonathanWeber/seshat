@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seshat Monitor</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard-container">
+    
+    <header class="glass-header">
+      <div class="logo-area">
+        <div class="logo-icon"></div>
+        <h1>Seshat <span class="badge">Monitor</span></h1>
+      </div>
+      <div class="status-indicator">
+        <div id="connection-dot" class="dot offline"></div>
+        <span id="connection-text">Conectando...</span>
+      </div>
+    </header>
+
+    <main class="grid-content">
+      <!-- Sistema e Modelo -->
+      <section class="card glass-card">
+        <h2>Inteligência (Ollama)</h2>
+        <div class="stat-row">
+          <span class="label">Modelo Ativo</span>
+          <select id="model-select" class="value select-box" disabled>
+            <option value="" disabled selected>Sincronizando...</option>
+            <option value="nomic-embed-text:latest">nomic-embed-text:latest (Leve)</option>
+            <option value="bge-m3:latest">bge-m3:latest (Pesado)</option>
+          </select>
+        </div>
+        <div class="stat-row">
+          <span class="label">Provedor</span>
+          <span class="value">Local-First</span>
+        </div>
+      </section>
+
+      <!-- Memória -->
+      <section class="card glass-card">
+        <h2>Memória API (RAM)</h2>
+        
+        <div class="stat-row">
+          <span class="label">Uso Total (RSS)</span>
+          <span id="mem-rss" class="value">-- MB</span>
+        </div>
+        
+        <div class="progress-container">
+          <div class="labels">
+            <span>Heap Used</span>
+            <span id="mem-heap">-- MB / -- MB</span>
+          </div>
+          <div class="progress-bar">
+            <div id="heap-fill" class="progress-fill"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Status Geral -->
+      <section class="card glass-card">
+        <h2>Servidor</h2>
+        <div class="stat-row">
+          <span class="label">Porta API</span>
+          <span class="value">3344</span>
+        </div>
+        <div class="stat-row">
+          <span class="label">Uptime</span>
+          <span id="uptime" class="value">--</span>
+        </div>
+        <div class="stat-row">
+          <span class="label">Versão</span>
+          <span id="api-version" class="value">--</span>
+        </div>
+      </section>
+
+      <!-- Logs do Backend -->
+      <section class="card glass-card logs-card">
+        <h2>Terminal (Backend Logs)</h2>
+        <div id="log-container" class="terminal-logs">
+          <div class="log-line system">Waiting for backend connection...</div>
+        </div>
+      </section>
+
+    </main>
+    
+    <footer class="glass-footer">
+      <p>Gerenciado por Antigravity</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

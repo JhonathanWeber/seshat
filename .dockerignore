@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+.turbo/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Runtime data
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+
+# Testing
+coverage/
+.nyc_output/
+
+# Docs
+docs/
+
+# Temporary
+tmp/
+temp/

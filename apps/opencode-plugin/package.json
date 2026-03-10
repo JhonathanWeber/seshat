@@ -1,0 +1,46 @@
+{
+  "name": "@seshat/opencode-plugin",
+  "version": "1.0.2",
+  "description": "seshat plugin for OpenCode - Semantic code search, memory, and context compression",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "seshat-config": "dist/config-cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts src/config-cli.ts --outdir=dist --target=bun",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "^1.2.15",
+    "@opencode-ai/sdk": "^1.2.15",
+    "@seshat/core": "workspace:*",
+    "@seshat/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "typescript": "^5.8.3"
+  },
+  "keywords": [
+    "opencode",
+    "plugin",
+    "seshat",
+    "semantic-search",
+    "code-search",
+    "memory",
+    "context-compression",
+    "ai",
+    "llm"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/S1LV4/seshat"
+  }
+}

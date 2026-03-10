@@ -1,0 +1,71 @@
+name: Skills
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'skills/**'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate SKILL.md
+        run: |
+          for skill in skills/*/SKILL.md; do
+            echo "Validating $skill"
+            
+            if [ ! -f "$skill" ]; then
+              echo "Error: SKILL.md not found"
+              exit 1
+            fi
+            
+            if ! grep -q "^---$" "$skill"; then
+              echo "Error: Missing YAML frontmatter in $skill"
+              exit 1
+            fi
+            
+            if ! grep -q "^name:" "$skill"; then
+              echo "Error: Missing 'name' in frontmatter"
+              exit 1
+            fi
+            
+            if ! grep -q "^description:" "$skill"; then
+              echo "Error: Missing 'description' in frontmatter"
+              exit 1
+            fi
+            
+            echo "✓ $skill is valid"
+          done
+
+      - name: List available skills
+        run: |
+          echo "## Available Skills" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          for skill in skills/*/SKILL.md; do
+            name=$(grep "^name:" "$skill" | head -1 | sed 's/name: *//')
+            desc=$(grep "^description:" "$skill" | head -1 | sed 's/description: *//')
+            echo "- **$name**: $desc" >> $GITHUB_STEP_SUMMARY
+          done
+
+  install-test:
+    runs-on: ubuntu-latest
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Test skill installation
+        run: |
+          npx skills add ${{ github.repository }} --list
+        env:
+          DISABLE_TELEMETRY: 1

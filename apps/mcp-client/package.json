@@ -1,0 +1,33 @@
+{
+  "name": "@seshat/mcp-client",
+  "version": "1.0.2",
+  "description": "seshat MCP server - Semantic code search, memory, and context compression via Model Context Protocol",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "seshat": "dist/index.js",
+    "seshat-config": "dist/config-cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts src/config-cli.ts --outdir=dist --target=bun",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@seshat/shared": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "typescript": "^5.8.3"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/S1LV4/seshat"
+  }
+}

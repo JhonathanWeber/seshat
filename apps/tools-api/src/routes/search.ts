@@ -1,0 +1,87 @@
+/**
+ * Search Routes
+ *
+ * POST /api/v1/search/project - Busca em projeto indexado
+ * POST /api/v1/search/code    - Busca semântica de código
+ */
+
+import { Elysia, t } from "elysia";
+import { SearchProjectTool, SearchCodeTool } from "@seshat/core";
+
+const searchProjectTool = new SearchProjectTool();
+const searchCodeTool = new SearchCodeTool();
+
+export const searchRoutes = new Elysia({ prefix: "/api/v1/search" })
+  .post(
+    "/project",
+    async ({ body }) => {
+      return await searchProjectTool.handle(body);
+    },
+    {
+      body: t.Object({
+        query: t.String({
+          description: "Search query (natural language or keywords)",
+        }),
+        projectId: t.String({ description: "Project ID to search in" }),
+        projectPath: t.Optional(
+          t.String({ description: "Project path for auto-reindex" }),
+        ),
+        maxResults: t.Optional(
+          t.Number({ default: 10, description: "Max results to return" }),
+        ),
+        minScore: t.Optional(
+          t.Number({
+            default: 0.3,
+            description: "Minimum relevance score (0-1)",
+          }),
+        ),
+        responseMode: t.Optional(
+          t.Union([t.Literal("summary"), t.Literal("full")], {
+            default: "summary",
+          }),
+        ),
+        autoReindex: t.Optional(t.Boolean({ default: true })),
+        include: t.Optional(
+          t.Array(t.String(), { description: "Glob patterns to include" }),
+        ),
+        exclude: t.Optional(
+          t.Array(t.String(), { description: "Glob patterns to exclude" }),
+        ),
+        explainScores: t.Optional(t.Boolean({ default: false })),
+        autoTranslate: t.Optional(
+          t.Boolean({
+            default: true,
+            description: "Enable bilingual fallback PT→EN when best score < 0.72",
+          }),
+        ),
+        format: t.Optional(
+          t.Union([t.Literal("json"), t.Literal("toon")], { default: "toon" }),
+        ),
+      }),
+      detail: {
+        tags: ["search"],
+        summary: "Search indexed project",
+        description:
+          "Contextual search using hybrid vector + keyword search with RRF ranking",
+      },
+    },
+  )
+  .post(
+    "/code",
+    async ({ body }) => {
+      return await searchCodeTool.handle(body);
+    },
+    {
+      body: t.Object({
+        query: t.String({ description: "Code search query" }),
+        projectId: t.String({ description: "Project ID to search in" }),
+        limit: t.Optional(t.Number({ default: 10 })),
+      }),
+      detail: {
+        tags: ["search"],
+        summary: "Semantic code search",
+        description:
+          "Search for code using semantic and keyword search (alias for search_project)",
+      },
+    },
+  );
