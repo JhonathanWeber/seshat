@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/5EJK9OF.png" alt="seshat" style="visibility: visible; max-width: 60%; display: block; margin: 0 auto;" />
+
 
 # seshat · Ancient Knowledge Keeper
 
